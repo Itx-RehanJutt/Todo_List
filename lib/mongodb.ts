@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
-const mongoUri = "mongodb://localhost:27017/todo-app";
+dotenv.config();
+const mongoUri: string = process.env.MONGODB_URI || '';
 
 if (!mongoUri) {
   throw new Error('MONGODB_URI environment variable is not defined');
