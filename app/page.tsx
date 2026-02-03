@@ -34,6 +34,7 @@ import {
   ListTodo,
   Settings,
 } from "lucide-react";
+import { Toaster, toast } from "sonner";
 
 interface Todo {
   _id: string;
@@ -104,9 +105,15 @@ export default function Page() {
         setNewDescription("");
         setNewPriority("medium");
         setNewDueDate("");
+        toast.success("Task created successfully!", {
+          description: `"${result.data.title}" has been added to your list.`,
+        });
       }
     } catch (error) {
       console.error("Failed to add todo:", error);
+      toast.error("Failed to create task", {
+        description: "Something went wrong. Please try again.",
+      });
     } finally {
       setIsAdding(false);
     }
@@ -123,9 +130,16 @@ export default function Page() {
       const result = await response.json();
       if (result.success) {
         setTodos(todos.map((todo) => (todo._id === id ? result.data : todo)));
+        const message = !currentCompleted
+          ? "Task completed! 🎉"
+          : "Task marked as active";
+        toast.success(message);
       }
     } catch (error) {
       console.error("Failed to update todo:", error);
+      toast.error("Failed to update task", {
+        description: "Something went wrong. Please try again.",
+      });
     }
   };
 
@@ -138,9 +152,15 @@ export default function Page() {
       const result = await response.json();
       if (result.success) {
         setTodos(todos.filter((todo) => todo._id !== id));
+        toast.success("Task deleted", {
+          description: "The task has been removed from your list.",
+        });
       }
     } catch (error) {
       console.error("Failed to delete todo:", error);
+      toast.error("Failed to delete task", {
+        description: "Something went wrong. Please try again.",
+      });
     }
   };
 
@@ -151,6 +171,13 @@ export default function Page() {
   };
 
   const saveEdit = async (id: string) => {
+    if (!editTitle.trim()) {
+      toast.error("Title cannot be empty", {
+        description: "Please enter a task title.",
+      });
+      return;
+    }
+
     try {
       const response = await fetch(`/api/todos/${id}`, {
         method: "PUT",
@@ -165,9 +192,15 @@ export default function Page() {
       if (result.success) {
         setTodos(todos.map((todo) => (todo._id === id ? result.data : todo)));
         setEditingId(null);
+        toast.success("Task updated", {
+          description: "Your changes have been saved.",
+        });
       }
     } catch (error) {
       console.error("Failed to save edit:", error);
+      toast.error("Failed to update task", {
+        description: "Something went wrong. Please try again.",
+      });
     }
   };
 
@@ -234,6 +267,7 @@ export default function Page() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      <Toaster position="top-center" />
       {/* Fixed Header */}
       <div className="sticky top-0 z-50 bg-white shadow-md border-b border-gray-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
