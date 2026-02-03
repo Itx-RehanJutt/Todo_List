@@ -266,14 +266,14 @@ export default function Page() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100">
       <Toaster position="top-center" />
       {/* Fixed Header */}
       <div className="sticky top-0 z-50 bg-white shadow-md border-b border-gray-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
           <div className="flex items-center justify-between gap-2 sm:gap-4">
             <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-              <div className="p-2 bg-blue-100 rounded-lg flex-shrink-0">
+              <div className="p-2 bg-blue-100 rounded-lg shrink-0">
                 <ListTodo className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
               </div>
               <div className="min-w-0">
@@ -285,7 +285,7 @@ export default function Page() {
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-2 flex-shrink-0">
+            <div className="flex items-center gap-2 shrink-0">
               <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-200 text-xs sm:text-sm">
                 <span className="hidden sm:inline">Active: </span>
                 {activeCount}
@@ -489,12 +489,12 @@ export default function Page() {
                           onCheckedChange={() =>
                             toggleTodo(todo._id, todo.completed)
                           }
-                          className="mt-1 flex-shrink-0"
+                          className="mt-1 shrink-0"
                         />
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1 flex-wrap">
                             <h3
-                              className={`font-semibold text-sm sm:text-base break-words ${
+                              className={`font-semibold text-sm sm:text-base wrap-break-word ${
                                 todo.completed
                                   ? "line-through text-gray-400"
                                   : "text-gray-800"
@@ -504,7 +504,7 @@ export default function Page() {
                             </h3>
                             <Badge
                               variant="outline"
-                              className={`text-xs font-medium flex-shrink-0 ${getPriorityColor(
+                              className={`text-xs font-medium shrink-0 ${getPriorityColor(
                                 todo.priority,
                               )}`}
                             >
@@ -512,7 +512,7 @@ export default function Page() {
                             </Badge>
                           </div>
                           {todo.description && (
-                            <p className="text-xs sm:text-sm text-gray-600 mb-2 break-words">
+                            <p className="text-xs sm:text-sm text-gray-600 mb-2 wrap-break-word">
                               {todo.description}
                             </p>
                           )}
@@ -531,7 +531,7 @@ export default function Page() {
                           )}
                         </div>
                       </div>
-                      <div className="flex gap-1 sm:gap-2 ml-2 flex-shrink-0">
+                      <div className="flex gap-1 sm:gap-2 ml-2 shrink-0">
                         <Button
                           onClick={() => startEditing(todo)}
                           size="sm"
